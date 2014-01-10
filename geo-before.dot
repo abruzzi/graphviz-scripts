@@ -1,0 +1,84 @@
+digraph geo_before{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    subgraph cluster_client01 {
+        label="Browser";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+        front_end_dev01 [label="Front End (Backbone + jQuery)"];
+    }
+
+    subgraph cluster_client02 {
+        label="Browser";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+        front_end_dev02 [label="Front End (Backbone + jQuery)"];
+    }
+
+    subgraph cluster_dev01 {
+        label="Web Container(Tomcat)";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+
+        web_application_dev01 [label="Web Application (Spring MVC)"];
+
+        subgraph cluster_gis_dev01{
+            label="GIS Application";
+            style="filled";
+            color="grey";
+            gis_server_dev01 [label="GIS Map Server"];
+            gis_worker_dev01 [label="GIS Backend Server"];
+            gis_server_dev01 -> gis_worker_dev01 [color="black"];
+        }
+
+        front_end_dev01 -> web_application_dev01 [label="HTTP"];
+        front_end_dev01 -> gis_server_dev01 [label="HTTP"];
+    }
+
+    subgraph cluster_dev02 {
+        label="Web Container(Tomcat)";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+
+        web_application_dev02 [label="Web Application (Spring MVC)"];
+        gis_server_dev02 [label="GIS Server"];
+
+        subgraph cluster_gis_dev02 {
+            label="GIS Application";
+            style="filled";
+            color="grey";
+
+            gis_server_dev02 [label="GIS Map Server"];
+            gis_worker_dev02 [label="GIS Backend Server"];
+            gis_server_dev02 -> gis_worker_dev02 [color="black"];
+        }
+
+        front_end_dev02 -> web_application_dev02 [label="HTTP"];
+        front_end_dev02 -> gis_server_dev02 [label="HTTP"];
+    }
+
+    subgraph cluster_nastar {
+        label="Web service";
+        color="grey";
+        style="filled";
+        fontcolor="#ffffff";
+
+        node [style="filled", color="orange"];
+        nastar [label="NaStar server"];
+    }
+    
+    web_application_dev01 -> nastar [label="SOAP"];
+    web_application_dev02 -> nastar [label="SOAP"];
+}

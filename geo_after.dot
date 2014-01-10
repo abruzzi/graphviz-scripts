@@ -1,0 +1,67 @@
+digraph geo_after{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+
+    subgraph cluster_client01 {
+        label="Browser";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+        front_end_dev01 [label="AngularJS App"];
+    }
+
+    subgraph cluster_client02 {
+        label="Browser";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+        front_end_dev02 [label="AngularJS App"];
+    }
+
+    subgraph cluster_dev01 {
+        label="WireMock (moco-like simple server)";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+
+        static_data_dev01 [label="Fixtures"];
+        proxy_dev01 [label="Proxy to GIS Server"];
+
+        front_end_dev01 -> static_data_dev01;
+        front_end_dev01 -> proxy_dev01;
+    }
+
+    subgraph cluster_dev02 {
+        label="WireMock (moco-like simple server)";
+        style="filled";
+        color="#eeeeee";
+
+        node [style="filled", color="orange"];
+
+        static_data_dev02 [label="Fixtures"];
+        proxy_dev02 [label="Proxy to GIS Server"];
+
+        front_end_dev02 -> static_data_dev02;
+        front_end_dev02 -> proxy_dev02;
+    }
+
+    subgraph cluster_gis {
+        style="filled";
+        color="grey";
+        node [style="filled", color="orange"];
+        gis_server [label="GIS Map Server"];
+        gis_worker [label="GIS Backend Server"];
+
+        gis_server -> gis_worker [color="black"];
+    }
+    
+    proxy_dev01 -> gis_server [label="proxy"];
+    proxy_dev02 -> gis_server [label="proxy"];
+}
