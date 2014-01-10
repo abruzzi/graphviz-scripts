@@ -1,0 +1,22 @@
+digraph neighbourhood{
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="skyblue", fontname="Consolas", fontsize=10];
+
+    node [style="filled"];
+    app [label="Neighbourhood Search", color="darkseagreen", fillcolor="darkseagreen"];
+    syndication [label="Syndication Search API", color="dodgerblue", fillcolor="dodgerblue"];
+    localmatters [label="DS LocalMatters API", color="lightyellow", fillcolor="lightyellow"];
+    fast [label="FAST Search Engine", color="springgreen", fillcolor="springgreen"];
+    gmap [label="Google Maps API", color="royalblue", fillcolor="royalblue"];
+
+    edge [color="pink"];
+    app -> syndication [label="/searches {latitude, longitude}"];
+    syndication -> localmatters [label="mapping"];
+    localmatters -> fast [label="do search"];
+    fast -> localmatters [label="response"];
+    localmatters -> syndication [label="convert fast result to json"];
+    syndication -> app ["mapping"];
+
+    app -> gmap [label="request maps info"];
+    gmap -> app [label="response maps info"];
+}

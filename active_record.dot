@@ -1,0 +1,20 @@
+digraph G{
+
+    fontname = "Consolas";
+    fontsize = 12;
+    color="#6b6b6b"
+
+    node [ fontname = "Consolas", fontsize = 12, shape = "Mrecord" ];
+    edge [ fontname = "Consolas", fontsize = 12 ];
+
+    node [style="filled", color="#eeeeee"];
+    edge [color="red"]
+
+    visitor [label="{Visitor|+id\l+name\l+password\l}"];
+    list_group [label="{ListGroup|+list_group_id\l+visitor_id\l}"];
+    list_group_item [label="{ListGroupItem|+list_group_item_id\l+list_group_id\l+note\l}"];
+
+    visitor -> list_group [label="1..*"];
+    list_group -> list_group_item [label="1..*"];
+
+}

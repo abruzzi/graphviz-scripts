@@ -1,0 +1,23 @@
+digraph rebase{
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="skyblue", fontname="Consolas", fontsize=10];
+  
+    c1 [label="commit 1"];
+    c2 [label="commit 2"];
+    c3b [label="commit 3'"];
+    c4b [label="commit 4'"];
+
+    node [color="grey"];
+    c3 [label="commit 3"];
+    c4 [label="commit 4"];
+  
+    node [color="gold"];
+    c5 [label="commit 5"];
+    c6 [label="commit 6"];
+
+    c6 -> c5 -> c2 -> c1;
+    c4b -> c3b -> c6;
+
+    edge [color="grey", style="dotted"];
+    c4 -> c3 -> c2;
+}

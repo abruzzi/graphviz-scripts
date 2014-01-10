@@ -1,0 +1,16 @@
+digraph spring_core{
+  node [shape="Mrecord", fontname="Consolas", fontsize=10];
+  edge [color="skyblue", fontname="Consolas", fontsize=10];
+
+  subgraph cluster_core{
+    style="filled";
+    color="lightgrey";
+    node [style="filled", color="chocolate"]
+    beans;
+    core;
+    context;
+    context_support;
+    expression;
+  }
+
+}

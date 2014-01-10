@@ -1,0 +1,16 @@
+digraph exporter{
+  node [shape="record", fontname="Consolas", fontsize=10];
+  edge [color="black", fontname="Consolas", fontsize=10];
+
+  Component [label="{Component|+ render() : String }"]
+  Exporter [label="{Exporter|+ export() : String }"] 
+  Image [label="{Image|+ render() : String }"]
+  Label [label="{Label|+ render() : String }"]
+
+  edge [arrowhead="none", headlabel="0..*"];
+  Exporter -> Component;
+
+  edge [arrowhead="empty", headlabel=""];
+  Component -> Image;
+  Component -> Label;
+}

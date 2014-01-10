@@ -1,0 +1,17 @@
+digraph{
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="skyblue", fontname="Consolas", fontsize=10];
+    /*
+    node [shape="box", color="#6b6b6b"]
+    edge [style="solid", color="green"]
+    */
+    json -> chelper -> mtimeline -> mdr -> fact -> mhelper;
+
+    json [label="(show_json.haml)\ntimeline_json"];
+    chelper [label="(campaign_timeline_helper.rb)\nadd_market_info_for_views"];
+    mtimeline [label="(market_for_timeline.rb)\nmarket_daily_roi"];
+    mdr [label="(market_daily_roi.rb)\ncommerial"];
+    fact [label="(fact_daily_suburb_market_median_roi_event_stats_rca.rb)\nmarket_median_records"];
+    mhelper [label="(market_median_helper.rb)\nfilter_data_for_market_median"];
+
+}

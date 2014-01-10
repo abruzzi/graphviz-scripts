@@ -1,0 +1,21 @@
+digraph merge{
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="skyblue", fontname="Consolas", fontsize=10];
+  
+    c1 [label="commit 1"];
+    c2 [label="commit 2"];
+    c3 [label="commit 3"];
+    c4 [label="commit 4"];
+    c7 [label="commit 7"];
+  
+    node [color="gold"];
+    c5 [label="commit 5"];
+    c6 [label="commit 6"];
+
+    c4 -> c3 -> c2;
+    c6 -> c5 -> c2 -> c1;
+
+    c7 -> c6;
+    c7 -> c4;
+
+}
