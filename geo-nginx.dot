@@ -1,0 +1,46 @@
+digraph geo_nginx{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    chrome [shape="none", image="browser-icon-chrome-resized.png", label=""];
+    firefox [shape="none", image="browser-icon-firefox-resized.png", label=""];
+
+    subgraph cluster_dev02 {
+        label="Web Application Server";
+        style="filled";
+        color="grey";
+
+        node [style="filled", color="orange"];
+
+        nginx [label="nginx", color="#69ad31"];
+        static_content [label="JavaScript, CSS, HTML", color="#edf4ed"];
+        dynamic_content [label="actions(*.do)"];
+
+        nginx -> static_content [label="local fs"];
+        nginx -> dynamic_content [label="proxy"];
+
+        angularjs [label="GEO Frontend", color="#edf4ed"];
+        gis_server [label="GIS Server Frontend", color="#edf4ed"];
+        static_content -> angularjs;
+        static_content -> gis_server;
+
+        gis_worker [label="GIS Backend Server"]
+        dynamic_content -> gis_worker;
+    }
+
+    subgraph cluster_ws {
+        label="Web Services, underlying system, etc"
+        style="filled";
+        color="grey";
+        node [style="filled", color="orange"];
+        web_services [label="Web Services"];
+    }
+
+    chrome -> nginx [label="HTTP Request"];
+    firefox -> nginx [label="HTTP Request"];
+
+    dynamic_content -> web_services;
+}
