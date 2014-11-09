@@ -1,0 +1,19 @@
+digraph search_locaitons{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    node [style="filled", color="orange"];
+
+    search_service [label="Search Service", color="#69ad31"];
+    search_logic [label="Search Logic"];
+    like_view [label="Like View"];
+    search_results [label="Search Result View"];
+    search_locaiton [label="Search Location View"];
+    
+    search_logic -> search_service [label="Preform the real search"];
+    search_logic -> search_locaiton [label="Get input"];
+    search_logic -> search_results [label="Set results"];
+}

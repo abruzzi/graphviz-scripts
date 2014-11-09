@@ -1,0 +1,17 @@
+digraph vector{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    node [style="filled", color="limegreen"]
+
+    map -> layer;
+    layer -> raster;
+    layer -> vector;
+
+    vector -> feature;
+    feature -> geometry;
+    feature -> attributes;
+}

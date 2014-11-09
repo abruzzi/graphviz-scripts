@@ -1,0 +1,31 @@
+digraph with_nginx{
+    fontname="Microsoft YaHei";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    chrome [shape="none", image="browser-icon-chrome-resized.png", label=""];
+    firefox [shape="none", image="browser-icon-firefox-resized.png", label=""];
+
+    subgraph cluster_dev02 {
+        label="奇葩应用";
+        style="filled";
+        color="grey";
+
+        node [style="filled", color="orange"];
+
+        nginx [label="nginx / httpd", color="#69ad31"];
+        static_content [label="AngularJS, BootStrap", color="#edf4ed"];
+        dynamic_content [label="Sinatra, ActiveRecord"];
+
+        nginx -> static_content [label="本地文件访问"];
+        nginx -> dynamic_content [label="代理请求"];
+    }
+
+    chrome -> nginx [label="HTTP 请求"];
+    firefox -> nginx [label="HTTP 请求"];
+
+    database [label="PostgreSQL, Sqlite"];
+    dynamic_content -> database;
+}

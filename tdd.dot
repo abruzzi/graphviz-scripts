@@ -1,12 +1,12 @@
 digraph tdd{
-    node [shape="Mrecord", fontname="Consolas", fontsize=10];
-    edge [color="skyblue", fontname="Consolas", fontsize=10];
+    node [shape="Mrecord", fontname="PT Mono", fontsize=14, height=.2];
+    edge [color="skyblue", fontname="PT Mono", fontsize=14];
 
-    add_test [label="Add Test", style="filled", color="chocolate"];
-    watch_fail [label="Watch Test Fail", style="filled", color="darkolivegreen"];
-    write_code [label="Write Code", style="filled", color="darkorchid"];
-    run_tests [label="Run Tests", style="filled", color="dodgerblue"];
-    refactor [label="Refactor", style="filled", color="gold"];
+    red [label="Failed", style="filled", color="#a01718"];
+    green [label="Pass", style="filled", color="#1fa756"];
+    blue [label="Refactor", style="filled", color="#2795e9"];
 
-    add_test -> watch_fail -> write_code -> run_tests -> refactor -> add_test;
+    red -> green [label="Coding"];
+    green -> blue [label="Review"];
+    blue -> red [label="Composing another"];
 }

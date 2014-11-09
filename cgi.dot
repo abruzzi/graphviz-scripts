@@ -1,0 +1,22 @@
+digraph cgi{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    chrome [shape="none", image="browser-icon-chrome-resized.png", label=""];
+    firefox [shape="none", image="browser-icon-firefox-resized.png", label=""];
+
+    apache [label="Apache httpd", style="filled", color="gold"];
+    cgi [label="CGI script", style="filled", color="limegreen"];
+    content [label="OS Resources", shape="note"];
+    database[label="Database", shape="box3d"];
+
+    firefox -> apache [label="HTTP Request"];
+    chrome -> apache [label="HTTP Request"];
+    apache -> cgi [label="fork-exec"];
+
+    cgi -> content [label="Generate dynamic content"];
+    cgi -> database[label="Access Database for content"];
+}

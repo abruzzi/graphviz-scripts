@@ -1,0 +1,32 @@
+digraph gis_stack{
+    fontname="Microsoft YaHei";
+    fontsize=12;
+    rankdir=LR;
+
+    node [shape="Mrecord", fontname="Microsoft YaHei", fontsize=10];
+    edge [color="#F1C40F", fontname="Microsoft YaHei", fontsize=10];
+
+    openlayers [shape="none", image="openlayers-logo-resized.png", label=""];
+    leaflet [shape="none", image="leaflet-logo.png", label=""];
+
+    tile_cache [label="TileCache", style="filled", color="orange"];
+    mapnik [label="Mapnik", style="filled", color="orange"];
+
+    subgraph cluster_datasource {
+        label = "Datasource"
+            style="filled";
+        color="cornsilk";
+
+        node [style="filled", color="orange"];
+        postgis [label="PostGIS database"]
+            shapefile [label="ERSI shapefiles"]
+            osm [label="OpenStreetMap"]
+    }
+
+    openlayers -> tile_cache [label="WMS over HTTP"];
+    leaflet -> tile_cache [label="WMS over HTTP"];
+    tile_cache -> mapnik [label="fetching & caching"];
+    mapnik -> postgis [label="rendering & styling"];
+    mapnik -> shapefile [style="dashed"];
+    mapnik -> osm [style="dashed"];
+}

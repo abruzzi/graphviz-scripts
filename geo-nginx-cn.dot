@@ -1,0 +1,46 @@
+digraph geo_nginx{
+    fontname="Consolas";
+    fontsize=10;
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+    chrome [shape="none", image="browser-icon-chrome-resized.png", label=""];
+    firefox [shape="none", image="browser-icon-firefox-resized.png", label=""];
+
+    subgraph cluster_dev02 {
+        label="Web应用服务器";
+        style="filled";
+        color="grey";
+
+        node [style="filled", color="orange"];
+
+        nginx [label="Nginx反向代理(1)", color="#69ad31"];
+        static_content [label="JavaScript, CSS, HTML(2)", color="#edf4ed"];
+        dynamic_content [label="actions(*.do)(3)"];
+
+        nginx -> static_content [label="本地文件系统访问"];
+        nginx -> dynamic_content [label="本地代理访问"];
+
+        angularjs [label="GEO前端资源", color="#edf4ed"];
+        gis_server [label="GIS Server前端资源", color="#edf4ed"];
+        static_content -> angularjs;
+        static_content -> gis_server;
+
+        gis_worker [label="GIS后台服务"]
+        dynamic_content -> gis_worker;
+    }
+
+    subgraph cluster_ws {
+        label="Web Services, 及其底层系统"
+        style="filled";
+        color="grey";
+        node [style="filled", color="orange"];
+        web_services [label="Web Services(4)"];
+    }
+
+    chrome -> nginx [label="HTTP请求"];
+    firefox -> nginx [label="HTTP请求"];
+
+    dynamic_content -> web_services;
+}
