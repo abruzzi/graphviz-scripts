@@ -8,7 +8,17 @@ digraph {
     node [shape="Mrecord", fontname="Consolas", fontsize=10];
     edge [color="#05c3de", fontname="Consolas", fontsize=10];
 
+    chrome [shape="none", image="logos/browser-icon-chrome-resized.png", label=""];
+    firefox [shape="none", image="logos/browser-icon-firefox-resized.png", label=""];
+
+    nginx [shape="none", image="logos/nginx_logo_resized.png", label=""];    
 	squid [shape="none", image="logos/squid_logo_resized.png", label=""];
+
+	chrome -> nginx;
+	firefox -> nginx;
+
+	nginx -> squid;
+	nginx -> geo_index;
 
 	subgraph cluster_search_engine {
 		color="#3CBEB1";
