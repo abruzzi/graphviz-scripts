@@ -3,30 +3,36 @@ digraph {
     fontsize=10;
     dir=LR;
 
-    graph [ dpi = 300 ];
+    graph [dpi=180];
 
     node [shape="Mrecord", fontname="Consolas", fontsize=10];
-    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+    edge [color="#05c3de", fontname="Consolas", fontsize=10];
 
-	squid [label="Squid Cache"];
+	squid [shape="none", image="logos/squid_logo_resized.png", label=""];
 
 	subgraph cluster_search_engine {
+		color="#3CBEB1";
+		fontcolor="#3CBEB1";
 		label="Search Engine for POI";
-		geo_index [label="GEO data Index"];
+		geo_index [shape="none", image="logos/elastic_logo_resized.png", label=""];
 	}
 
 	geo_index -> pgpool2;
 
 	subgraph cluster_wms {
+		color="#6BD06A";
+		fontcolor="#6BD06A";
 		label="Web Mapping Service";
-		wms1 [label="MapServer WMS"];
-		wms2 [label="MapServer WMS"];
+		wms1 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
+		wms2 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
 	}
 
 	subgraph cluster_wfs {
+		color="#363AA1";
+		fontcolor="#363AA1";
 		label="Web Feature Service";
-		wfs1 [label="MapServer WFS"];
-		wfs2 [label="MapServer WFS"];
+		wfs1 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
+		wfs2 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
 	}
 	
 	squid -> wfs1;
@@ -41,33 +47,19 @@ digraph {
 	wms1 -> pgpool2;
 	wms2 -> pgpool2;
 
-	pgpool2 [label="PostgreSQL Load Balancer"];
+	pgpool2 [shape="none", image="logos/pgpool_ii_logo_resized.png", label=""];
 
 	subgraph cluster_pg {
+		color="#326791";
+		fontcolor="#326791";
 		label="Spatial Database Cluster";
-
-		pg1 [label="PostgreSQL:Master"];
-		pg2 [label="PostgreSQL:Slave"];
-		pg3 [label="PostgreSQL:Slave"];
+		pg1 [shape="none", image="logos/postgresql_logo_resized.png", label=""];
+		pg2 [shape="none", image="logos/postgresql_logo_resized.png", label=""];
+		pg3 [shape="none", image="logos/postgresql_logo_resized.png", label=""];
 	}
 	
 	pgpool2 -> pg1;
 	pgpool2 -> pg2;
 	pgpool2 -> pg3;
 
-	/*
-	subgraph cluster_datasource {
-		label="External Data Sources";
-
-		shapefile [label="Shapefile", shape="note"];
-		raster [label="Raster", shape="note"];
-		geojson [label="GeoJSON", shape="note"];
-		kml [label="KML/GML", shape="record"];
-	}
-	
-	shapefile -> pgpool2;
-	raster -> pgpool2;
-	geojson -> pgpool2;
-	kml -> pgpool2;
-	*/
 }
