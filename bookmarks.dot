@@ -1,0 +1,16 @@
+digraph G{
+  node [ shape = "record", fontname = "Open Sans", fontsize = 16, \
+  fontcolor="#ffffff", style="filled", color="#1FB6C3", fillcolor="#1FB6C3bf"];
+  edge [ fontname = "Open Sans", fontsize = 16,
+  color="#1FB6C3", fontcolor="#1FB6C3" ];
+ 
+  feed [ label = "{Feed|+ url: string\l+ title: string\l+ id: number\l}" ];
+  user [ label = "{User|+ name: string\l+ avator: string\l+ id: number\l}" ];
+
+  node [fontcolor="#ffffff", style="filled", color="#1BB470", fillcolor="#1BB470bf"];
+  user_feed [label="{UserFeed|+ userId: number\l+ feedId: number\l}"];
+  edge [ arrowhead = "empty" ];
+ 
+  feed->user_feed [arrowhead="none", label="1..*"];
+  user->user_feed [arrowhead="none", label="1..*"];
+}

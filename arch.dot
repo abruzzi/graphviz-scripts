@@ -1,0 +1,73 @@
+digraph {
+	fontname="Microsoft YaHei";
+    fontsize=10;
+    dir=LR;
+
+    graph [ dpi = 300 ];
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#F1C40F", fontname="Consolas", fontsize=10];
+
+	squid [label="Squid Cache"];
+
+	subgraph cluster_search_engine {
+		label="Search Engine for POI";
+		geo_index [label="GEO data Index"];
+	}
+
+	geo_index -> pgpool2;
+
+	subgraph cluster_wms {
+		label="Web Mapping Service";
+		wms1 [label="MapServer WMS"];
+		wms2 [label="MapServer WMS"];
+	}
+
+	subgraph cluster_wfs {
+		label="Web Feature Service";
+		wfs1 [label="MapServer WFS"];
+		wfs2 [label="MapServer WFS"];
+	}
+	
+	squid -> wfs1;
+	squid -> wfs2;
+
+	squid -> wms1;
+	squid -> wms2;
+
+	wfs1 -> pgpool2;
+	wfs2 -> pgpool2;
+
+	wms1 -> pgpool2;
+	wms2 -> pgpool2;
+
+	pgpool2 [label="PostgreSQL Load Balancer"];
+
+	subgraph cluster_pg {
+		label="Spatial Database Cluster";
+
+		pg1 [label="PostgreSQL:Master"];
+		pg2 [label="PostgreSQL:Slave"];
+		pg3 [label="PostgreSQL:Slave"];
+	}
+	
+	pgpool2 -> pg1;
+	pgpool2 -> pg2;
+	pgpool2 -> pg3;
+
+	/*
+	subgraph cluster_datasource {
+		label="External Data Sources";
+
+		shapefile [label="Shapefile", shape="note"];
+		raster [label="Raster", shape="note"];
+		geojson [label="GeoJSON", shape="note"];
+		kml [label="KML/GML", shape="record"];
+	}
+	
+	shapefile -> pgpool2;
+	raster -> pgpool2;
+	geojson -> pgpool2;
+	kml -> pgpool2;
+	*/
+}
