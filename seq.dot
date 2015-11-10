@@ -1,24 +1,27 @@
 digraph G { 
     rankdir="LR"; 
-    node[shape="point"]; 
-    edge[arrowhead="none"] 
+    node[shape="point", width=0, height=0]; 
+    edge[arrowhead="none", style="dashed"] 
 
     { 
         rank="same"; 
-        LC[shape="plaintext"] 
-            LC -> step00 -> step01 -> step02 -> step03 -> step04 -> step05; 
+        edge[style="solided"];
+        LC[shape="plaintext"]; 
+        LC -> step00 -> step01 -> step02 -> step03 -> step04 -> step05; 
     } 
 
     { 
         rank="same"; 
-        Agency[shape="plaintext"] 
-            Agency -> step10 -> step11 -> step12 -> step13 -> step14 -> step15; 
+        edge[style="solided"];
+        Agency[shape="plaintext"];
+        Agency -> step10 -> step11 -> step12 -> step13 -> step14 -> step15; 
     } 
 
     { 
         rank="same"; 
-        Agent[shape="plaintext"] 
-            Agent -> step20 -> step21 -> step22 -> step23 -> step24 -> step25; 
+        edge[style="solided"];
+        Agent[shape="plaintext"];
+        Agent -> step20 -> step21 -> step22 -> step23 -> step24 -> step25; 
     } 
 
     step00 -> step10 [label="sends email new custumer", arrowhead="normal"]; 

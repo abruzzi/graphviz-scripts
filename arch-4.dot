@@ -1,7 +1,7 @@
 digraph {
 	fontname="Microsoft YaHei";
     fontsize=10;
-    dir=TD;
+    dir=LR;
 
     graph [dpi=180];
 
@@ -14,8 +14,8 @@ digraph {
 	chrome -> nginx;
 	firefox -> nginx;
 
-	nginx -> squid;
-	nginx -> geo_index;
+	nginx -> squid [label="Map related requests"];
+	nginx -> geo_index [label="Search related requests"];
 
 	subgraph cluster_backend {
 		color="#009801";
@@ -49,14 +49,22 @@ digraph {
 			wfs1 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
 			wfs2 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
 		}
-		
-		squid -> wfs1;
 
+		subgraph cluster_wps {
+			color="#FF7A28";
+			fontcolor="#FF7A28";
+			label="Web Processing Service";
+			wps1 [shape="none", image="logos/deegree_logo_resized.png", label=""]
+			wps2 [shape="none", image="logos/deegree_logo_resized.png", label=""]
+		}
+
+		squid -> wfs1;
 		squid -> wms1;
+		squid -> wps1;
 
 		wfs1 -> pgpool2;
-
 		wms1 -> pgpool2;
+		wps1 -> pgpool2;
 
 		pgpool2 [shape="none", image="logos/pgpool_ii_logo_resized.png", label=""];
 

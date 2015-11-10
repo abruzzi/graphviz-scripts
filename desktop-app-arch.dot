@@ -1,0 +1,55 @@
+digraph {
+	fontname="Microsoft YaHei";
+    fontsize=10;
+    dir=LR;
+	splines=false;
+
+    graph [dpi=180];
+
+    node [shape="record", fontname="Consolas", fontsize=10];
+    edge [color="#05c3de", fontname="Consolas", fontsize=10];
+
+    subgraph cluster_view {
+    	label="展现层";
+    	color="#00C3E0";
+
+    	swing [label="Swing组件", color="#00C3E0"];
+    	chrome [label="浏览器", color="#F88D19"];
+    }
+
+    chrome -> layout_engine [label="HTTP请求"];
+    chrome -> domain_service [label="HTTP请求"];
+
+    swing -> layout_engine [label="API调用"];
+    swing -> domain_service [label="API调用"];
+
+    subgraph cluster_bl {
+    	label="业务逻辑层";
+    	color="#3C7CCC";
+
+    	orm [label="对象-关系映射" ,shape="component", color="#3C7CCC"];
+    	layout_engine [label="布局引擎", shape="component", color="#F88D19"];
+    	domain_obj [label="业务对象", shape="component", color="#3C7CCC"];
+    	domain_service [label="业务服务", shape="component", color="#3C7CCC"];
+    }
+
+    domain_service -> domain_obj;
+    domain_service -> orm;
+
+    subgraph cluster_datasource {
+    	label="数据持久化";
+    	color="#DEDEDE";
+
+    	sqlite [label="Sqlite文件数据库", shape="note", color="#DEDEDE"];
+    	xml [label="XML文件", shape="note", color="#DEDEDE"];
+    	mysql [label="MySQL数据库", color="#F88D19"]
+    }
+
+    orm -> sqlite;
+    orm -> xml [style="dashed"];
+    orm -> mysql [style="dashed", color="#F88D19"];
+
+//    chrome [shape="none", image="logos/browser-icon-chrome-resized.png", label=""];
+//    firefox [shape="none", image="logos/browser-icon-firefox-resized.png", label=""];
+
+}

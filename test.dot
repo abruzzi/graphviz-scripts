@@ -1,0 +1,13 @@
+digraph abc{
+	node [shape="record"];
+	edge [style="dashed"];
+	 
+	a [style="filled", color="black", fillcolor="chartreuse"];
+	b;
+	c [shape="none", image="logos/browser-icon-chrome-resized.png", label=""];
+	d;
+	 
+	a -> b;
+	b -> d;
+	c -> d [color="red"];
+}

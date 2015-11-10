@@ -1,7 +1,7 @@
 digraph {
 	fontname="Microsoft YaHei";
     fontsize=10;
-    dir=TD;
+    dir=LR;
 
     graph [dpi=180];
 
@@ -11,28 +11,15 @@ digraph {
     chrome [shape="none", image="logos/browser-icon-chrome-resized.png", label=""];
     firefox [shape="none", image="logos/browser-icon-firefox-resized.png", label=""];
     
-	chrome -> nginx;
-	firefox -> nginx;
-
-	nginx -> squid;
-	nginx -> geo_index;
+	chrome -> squid;
+	firefox -> squid;
 
 	subgraph cluster_backend {
 		color="#009801";
 		fontcolor="#009801";
 		label="GIS backend";
-		nginx [shape="none", image="logos/nginx_logo_resized.png", label=""];    
+		//nginx [shape="none", image="logos/nginx_logo_resized.png", label=""];    
 		squid [shape="none", image="logos/squid_logo_resized.png", label=""];
-
-		subgraph cluster_search_engine {
-			color="#3CBEB1";
-			fontcolor="#3CBEB1";
-			label="Search Engine for POI";
-			geo_index [shape="none", image="logos/elastic_logo_resized.png", label=""];
-			geo_index2 [shape="none", image="logos/elastic_logo_resized.png", label=""];
-		}
-
-		geo_index -> pgpool2;
 
 		subgraph cluster_wms {
 			color="#6BD06A";
@@ -49,14 +36,22 @@ digraph {
 			wfs1 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
 			wfs2 [shape="none", image="logos/mapserver_logo_resized.png", label=""];
 		}
+
+		subgraph cluster_wps {
+			color="#FF7A28";
+			fontcolor="#FF7A28";
+			label="Web Processing Service";
+			wps1 [shape="none", image="logos/deegree_logo_resized.png", label=""]
+			wps2 [shape="none", image="logos/deegree_logo_resized.png", label=""]
+		}
 		
 		squid -> wfs1;
-
 		squid -> wms1;
+		squid -> wps1;
 
 		wfs1 -> pgpool2;
-
 		wms1 -> pgpool2;
+		wps1 -> pgpool2;
 
 		pgpool2 [shape="none", image="logos/pgpool_ii_logo_resized.png", label=""];
 
