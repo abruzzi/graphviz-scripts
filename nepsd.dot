@@ -1,0 +1,69 @@
+digraph nepsd {
+	fontname="Microsoft YaHei";
+    fontsize=10;
+    dir=TD;
+
+    graph [dpi=180];
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#05c3de", fontname="Consolas", fontsize=10];
+
+	phone [label="Mobile Phone"];
+	desktop [label="Desktop"];
+	pad [label="Pad/Laptop"];
+
+	load_balance [label="Load Balance"];
+
+	phone -> load_balance;
+	desktop -> load_balance;
+	pad -> load_balance;
+
+	subgraph cluster_c1 {
+		label="Cluster 1";
+
+		r_proxy [label="Reverse Proxy"];
+		rule_engine [label="Rule Engine", shape="component"];
+		validator [label="Validator", shape="component"];
+		sso [label="Single Sign On", shape="component"];
+		project_manager [label="Project Manager", shape="component"];
+		storage [label="Storage"];
+		exporter [label="Exporter"];
+		database [label="Database"];
+		queue [label="Queue"];
+	}
+
+	subgraph cluster_c2 {
+		label="Cluster 2";
+
+		r_proxy_2 [label="Reverse Proxy"];
+		rule_engine_2 [label="Rule Engine", shape="component"];
+		validator_2 [label="Validator", shape="component"];
+		sso_2 [label="Single Sign On", shape="component"];
+		project_manager_2 [label="Project Manager", shape="component"];
+		storage_2 [label="Storage"];
+		exporter_2 [label="Exporter"];
+		database_2 [label="Database"];
+		queue_2 [label="Queue"];
+	}
+
+	load_balance -> r_proxy;
+	r_proxy -> rule_engine;
+	r_proxy -> validator;
+	r_proxy -> storage;
+	r_proxy -> exporter;
+	r_proxy -> project_manager;
+
+	storage -> database;
+	exporter -> queue;
+
+	load_balance -> r_proxy_2;
+	r_proxy_2 -> rule_engine_2;
+	r_proxy_2 -> validator_2;
+	r_proxy_2 -> storage_2;
+	r_proxy_2 -> exporter_2;
+	r_proxy_2 -> project_manager_2;
+
+	storage_2 -> database_2;
+	exporter_2 -> queue_2;
+
+}

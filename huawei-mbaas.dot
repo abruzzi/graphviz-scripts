@@ -1,0 +1,12 @@
+digraph mbaas {
+	fontname="Microsoft YaHei";
+    fontsize=12;
+    rankdir=LR;
+    
+    graph [dpi=180];
+
+    node [shape="Mrecord", fontname="Microsoft YaHei", fontsize=10];
+    edge [color="#F1C40F", fontname="Microsoft YaHei", fontsize=10];
+
+    
+}

@@ -2,12 +2,14 @@ digraph gis_stack{
     fontname="Microsoft YaHei";
     fontsize=12;
     rankdir=LR;
+    
+    graph [dpi=180];
 
     node [shape="Mrecord", fontname="Microsoft YaHei", fontsize=10];
     edge [color="#F1C40F", fontname="Microsoft YaHei", fontsize=10];
 
-    openlayers [shape="none", image="openlayers-logo-resized.png", label=""];
-    leaflet [shape="none", image="leaflet-logo.png", label=""];
+    openlayers [shape="none", image="logos/browser-icon-chrome-resized.png", label=""];
+    leaflet [shape="none", image="logos/browser-icon-firefox-resized.png", label=""];
 
     tile_cache [label="TileCache", style="filled", color="orange"];
     mapnik [label="Mapnik", style="filled", color="orange"];
