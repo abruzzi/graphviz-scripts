@@ -1,0 +1,91 @@
+digraph nepsd {
+	fontname="Microsoft YaHei";
+    fontsize=10;
+    dir=TD;
+
+    graph [dpi=180];
+
+    node [shape="Mrecord", fontname="Consolas", fontsize=10];
+    edge [color="#05c3de", fontname="Consolas", fontsize=10];
+
+	desktop [label="Desktop - Chrome/Firefox"];
+	pad [label="Pad/Laptop - Chrome/Safari"];
+
+	load_balance [label="Load Balance - Nginx"];
+
+	desktop -> load_balance;
+	pad -> load_balance;
+
+	subgraph cluster_c1 {
+		label="Cluster 1";
+
+		web_server_c1 [label="Web Server - Tomcat/Jetty"];
+
+		subgraph cluster_exporter {
+			exporter1 [label="Site Exporter", shape="component"];
+			exporter2 [label="Site Exporter", shape="component"];
+		}
+		
+		message_queue_c1 [label="Queue Server - RabbitMQ"];
+		
+		subgraph cluster_importer {
+			importer1 [label="DIY Importer", shape="component"];
+			importer2 [label="DIY Importer", shape="component"];	
+		}
+		
+		database_c1 [label="NoSQL Database - Mongo"];
+	}
+
+	web_server_c1 -> message_queue_c1;
+	message_queue_c1 -> exporter1;
+	message_queue_c1 -> exporter2;
+
+	message_queue_c1 -> importer1;
+	message_queue_c1 -> importer2;
+
+	web_server_c1 -> database_c1;
+
+	exporter1 -> database_c1;
+	exporter2 -> database_c1;
+
+	importer1 -> database_c1;
+	importer2 -> database_c1;
+
+	subgraph cluster_c2 {
+		label="Cluster 2";
+		
+		web_server_c2 [label="Web Server - Tomcat/Jetty"];
+
+		subgraph cluster_importer2 {
+			importer3 [label="DIY Importer", shape="component"];
+			importer4 [label="DIY Importer", shape="component"];	
+		}
+
+		subgraph cluster_exporter2 {
+			exporter3 [label="Site Exporter", shape="component"];
+			exporter4 [label="Site Exporter", shape="component"];		
+		}
+		
+		message_queue_c2 [label="Queue Server - RabbitMQ"];
+		
+		database_c2 [label="NoSQL Database - Mongo"];
+	}
+
+	load_balance -> web_server_c1;
+	load_balance -> web_server_c2;
+
+	web_server_c2 -> message_queue_c2;
+	message_queue_c2 -> exporter3;
+	message_queue_c2 -> exporter4;
+
+	message_queue_c2 -> importer3;
+	message_queue_c2 -> importer4;
+
+	web_server_c2 -> database_c2;
+
+	exporter3 -> database_c2;
+	exporter4 -> database_c2;
+
+	importer3 -> database_c2;
+	importer4 -> database_c2;
+}
