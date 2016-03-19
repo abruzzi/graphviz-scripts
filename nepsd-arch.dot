@@ -5,35 +5,45 @@ digraph nepsd {
 
     graph [dpi=180];
 
-    node [shape="Mrecord", fontname="Consolas", fontsize=10];
-    edge [color="#05c3de", fontname="Consolas", fontsize=10];
+    node [color="#3C7CCC", shape="record", fontname="Consolas", fontsize=10];
+    edge [color="#636260", fontname="Consolas", fontsize=10, arrowhead="empty", style="dashed"];
 
-	desktop [label="Desktop - Chrome/Firefox"];
-	pad [label="Pad/Laptop - Chrome/Safari"];
+	desktop [label="Desktop - Chrome/Firefox", color="#E16726", style="filled", fontcolor="#ffffff"];
+	pad [label="Pad/Laptop - Chrome/Safari", color="#0A9DE5", style="filled", fontcolor="#ffffff"];
 
-	load_balance [label="Load Balance - Nginx"];
+	load_balance [label="Load Balance - Nginx", style="filled", color="#029802", fontcolor="#ffffff"];
 
 	desktop -> load_balance;
 	pad -> load_balance;
 
 	subgraph cluster_c1 {
-		label="Cluster 1";
+		label="Application Cluster 1";
+		style="filled"
+		color="#F7F7F7"
 
-		web_server_c1 [label="Web Server - Tomcat/Jetty"];
+		web_server_c1 [label="Web Server - Tomcat/Jetty", style="filled", color="#D2A629", fontcolor="#ffffff"];
 
 		subgraph cluster_exporter {
+			label="Exporter Instances"
+			style="filled"
+			color="#EBEBEB"
+
 			exporter1 [label="Site Exporter", shape="component"];
 			exporter2 [label="Site Exporter", shape="component"];
 		}
 		
-		message_queue_c1 [label="Queue Server - RabbitMQ"];
+		message_queue_c1 [label="Queue Server - RabbitMQ", style="filled", color="#FF6604", fontcolor="#ffffff"];
 		
 		subgraph cluster_importer {
+			label="Importer Instances"
+			style="filled"
+			color="#EBEBEB"
+
 			importer1 [label="DIY Importer", shape="component"];
 			importer2 [label="DIY Importer", shape="component"];	
 		}
 		
-		database_c1 [label="NoSQL Database - Mongo"];
+		database_c1 [label="NoSQL Database - Mongo", style="filled", color="#1E8A36", fontcolor="#ffffff"];
 	}
 
 	web_server_c1 -> message_queue_c1;
@@ -52,23 +62,33 @@ digraph nepsd {
 	importer2 -> database_c1;
 
 	subgraph cluster_c2 {
-		label="Cluster 2";
+		label="Application Cluster 2";
+		style="filled"
+		color="#F7F7F7"
 		
-		web_server_c2 [label="Web Server - Tomcat/Jetty"];
+		web_server_c2 [label="Web Server - Tomcat/Jetty", style="filled", color="#D2A629", fontcolor="#ffffff"];
 
 		subgraph cluster_importer2 {
+			label="Importer Instances"
+			style="filled"
+			color="#EBEBEB"
+			
 			importer3 [label="DIY Importer", shape="component"];
 			importer4 [label="DIY Importer", shape="component"];	
 		}
 
 		subgraph cluster_exporter2 {
+			label="Exporter Instances"
+			style="filled"
+			color="#EBEBEB"
+
 			exporter3 [label="Site Exporter", shape="component"];
 			exporter4 [label="Site Exporter", shape="component"];		
 		}
 		
-		message_queue_c2 [label="Queue Server - RabbitMQ"];
+		message_queue_c2 [label="Queue Server - RabbitMQ", style="filled", color="#FF6604", fontcolor="#ffffff"];
 		
-		database_c2 [label="NoSQL Database - Mongo"];
+		database_c2 [label="NoSQL Database - Mongo", style="filled", color="#1E8A36", fontcolor="#ffffff"];
 	}
 
 	load_balance -> web_server_c1;
