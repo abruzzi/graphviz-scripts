@@ -14,20 +14,15 @@ digraph jigsaw {
 
     eureka_server [label="Eureka Service Discovery", color="#F68D2E", style="filled", fontcolor="#ffffff"];
 
- 	{
-    	rank = same;
-  		//entry_point;
-  		//eureka_server;
-  	}
-
   	subgraph cluster_frontend {
 		label="Frontend Entry Point";
 		style="filled"
 		color="#F7F7F7"
 
-		feign_client_staff [label="Feign Client - Ribbon", color="#F04E98", style="filled", fontcolor="#ffffff"];
-		feign_client_assignment [label="Feign Client - Ribbon", color="#F04E98", style="filled", fontcolor="#ffffff"];
-		entry_point [label="Entry Point", color="#F04E98", style="filled", fontcolor="#ffffff"];
+		feign_client_staff [label="Feign Client - Ribbon", color="#407EC9", style="filled", fontcolor="#ffffff"];
+		feign_client_assignment [label="Feign Client - Ribbon", color="#407EC9", style="filled", fontcolor="#ffffff"];
+		entry_point [label="Entry Point", color="#407EC9", style="filled", fontcolor="#ffffff"];
+        static_pages [label="Static Assets", color="#407EC9", style="filled", fontcolor="#ffffff"];
   	}
 
   	entry_point -> feign_client_assignment;
