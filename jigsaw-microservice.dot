@@ -19,14 +19,16 @@ digraph jigsaw {
 		style="filled"
 		color="#F7F7F7"
 
-		feign_client_staff [label="Feign Client - Ribbon", color="#407EC9", style="filled", fontcolor="#ffffff"];
-		feign_client_assignment [label="Feign Client - Ribbon", color="#407EC9", style="filled", fontcolor="#ffffff"];
-		entry_point [label="Entry Point", color="#407EC9", style="filled", fontcolor="#ffffff"];
+        zuul [label="Zuul Reverse Proxy", color="#407EC9", style="filled", fontcolor="#ffffff"];
+		
+        feign_client_staff [label="/staffs/** - Ribbon", color="#407EC9", style="filled", fontcolor="#ffffff"];
+		feign_client_assignment [label="/assignments/** - Ribbon", color="#407EC9", style="filled", fontcolor="#ffffff"];
+		
         static_pages [label="Static Assets", color="#407EC9", style="filled", fontcolor="#ffffff"];
   	}
 
-  	entry_point -> feign_client_assignment;
-  	entry_point -> feign_client_staff;
+  	zuul -> feign_client_assignment;
+  	zuul -> feign_client_staff;
 
     subgraph cluster_staff {
     	label="Staff Service Cluster";
@@ -47,10 +49,10 @@ digraph jigsaw {
     	assignment_service_2 [label="Assignment\n Micro-service", color="#319B42", style="filled", fontcolor="#ffffff"];
     }
 
-    desktop -> entry_point [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
-    pad -> entry_point [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+    desktop -> zuul [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+    pad -> zuul [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
 
-    entry_point -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9"];
+    zuul -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9"];
     staff_service_1 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9"];
     staff_service_2 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9"];
     staff_service_3 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9"];
