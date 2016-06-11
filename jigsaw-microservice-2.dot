@@ -1,0 +1,136 @@
+digraph jigsaw2 {
+	fontname="Microsoft YaHei";
+    fontsize=10;
+    dir=LR;
+	
+    splines="compound";
+    overlap = false;
+
+    graph [dpi=180];
+
+    node [color="#3C7CCC", shape="record", fontname="Consolas", fontsize=10, penwidth=0.5];
+    edge [color="#636260", fontname="Consolas", fontsize=10, arrowhead="empty",	penwidth=0.5];
+
+	desktop [label="Desktop - Chrome", color="#E16726", style="filled", fontcolor="#ffffff"];
+	pad [label="Pad/Laptop - Chrome", color="#0A9DE5", style="filled", fontcolor="#ffffff"];
+
+    subgraph cluster_eureka {
+        label="Eureka Cluster: Service Discovery";
+        style="filled"
+        color="#F7F7F7"
+
+        eureka_server [label="Eureka Server", color="#F68D2E", style="filled", fontcolor="#ffffff"];    
+        eureka_server_2 [label="Eureka Server", color="#F68D2E", style="filled", fontcolor="#ffffff", border="dashed"];
+    }
+
+    subgraph cluster_config {
+        label="Config Service";
+        style="filled"
+        color="#F7F7F7"
+
+        config [label="Config Server", color="#6BBC4F", style="filled", fontcolor="#ffffff"];
+        gitrepo [label="Git Repository", color="#6BBC4F", style="filled", fontcolor="#ffffff"];
+
+        config -> gitrepo;
+    }
+
+  	subgraph cluster_frontend {
+		label="Frontend Entry Point";
+		style="filled"
+		color="#F7F7F7"
+
+        zuul [label="Zuul Reverse Proxy", color="#407EC9", style="filled", fontcolor="#ffffff"];
+		
+        ribbon_client_staff [label="Ribbon", color="#20C3DE", style="filled", fontcolor="#ffffff"];
+		ribbon_client_assignment [label="Ribbon", color="#319B42", style="filled", fontcolor="#ffffff"];
+		ribbon_client_user [label="Ribbon", color="#b11c54", style="filled", fontcolor="#ffffff"];
+
+        login [label="Login Form", color="#407EC9", style="filled", fontcolor="#ffffff"];
+  	}
+
+  	zuul -> ribbon_client_assignment [label="/staffs/**"];
+  	zuul -> ribbon_client_staff [label="/assignments/**"];
+    zuul -> ribbon_client_user [label="/users/**"];
+    zuul -> login;
+
+    subgraph cluster_staff {
+    	label="Staff Service Cluster";
+		style="filled"
+		color="#F7F7F7"
+
+    	staff_service_1 [label="Staff Service", color="#20C3DE", style="filled", fontcolor="#ffffff"];
+    	staff_service_2 [label="Staff Service", color="#20C3DE", style="filled", fontcolor="#ffffff"];
+    	staff_service_3 [label="Staff Service", color="#20C3DE", style="filled", fontcolor="#ffffff"];
+
+        mongodb_1 [label="MongoDB", color="#20C3DE", style="filled", fontcolor="#ffffff"];
+
+        staff_service_1 -> mongodb_1;
+        staff_service_2 -> mongodb_1;
+        staff_service_3 -> mongodb_1;
+    }
+
+    subgraph cluster_assignments {
+    	label="Assignment Service Cluster";
+		style="filled"
+		color="#F7F7F7"
+
+    	assignment_service_1 [label="Assignment\n Service", color="#319B42", style="filled", fontcolor="#ffffff"];
+    	assignment_service_2 [label="Assignment\n Service", color="#319B42", style="filled", fontcolor="#ffffff"];
+
+        mongodb_2 [label="MongoDB", color="#319B42", style="filled", fontcolor="#ffffff"];
+
+        assignment_service_1 -> mongodb_2;
+        assignment_service_2 -> mongodb_2;
+    }
+
+    subgraph cluster_user {
+        label="User Managerment Serivce";
+        style="filled"
+        color="#F7F7F7"
+
+        user_service_1 [label="User\n Service", color="#b11c54", style="filled", fontcolor="#ffffff"];
+        user_service_2 [label="User\n Service", color="#b11c54", style="filled", fontcolor="#ffffff"];
+
+        mysql [label="MySQL DB", color="#b11c54", style="filled", fontcolor="#ffffff"];
+
+        user_service_1 -> mysql;
+        user_service_2 -> mysql;
+    }
+
+    desktop -> zuul [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+    pad -> zuul [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+
+    zuul -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+    staff_service_1 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+    staff_service_2 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+    staff_service_3 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+
+    assignment_service_1 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+    assignment_service_2 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+
+    user_service_1 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+    user_service_2 -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+
+    config -> eureka_server [label="register", color="#407EC9", fontcolor="#407EC9", penwidth="1.1"];
+
+    ribbon_client_staff -> staff_service_1 [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+    ribbon_client_staff -> staff_service_2 [style="dashed", color="#707070"];
+    ribbon_client_staff -> staff_service_3 [style="dashed", color="#707070"];
+
+    ribbon_client_assignment -> assignment_service_1 [label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+    ribbon_client_assignment -> assignment_service_2 [style="dashed", color="#707070"];
+
+    ribbon_client_user -> user_service_1 [label="HTTP Request", label="HTTP Request", color="#DA291C", fontcolor="#DA291C"];
+
+
+    zuul -> config [label="Fetch Configuration"];
+    staff_service_1 -> config [label="Fetch Configuration"];
+    staff_service_2 -> config [label="Fetch Configuration"];
+    staff_service_3 -> config [label="Fetch Configuration"];
+
+    assignment_service_1 -> config [label="Fetch Configuration"];
+    assignment_service_2 -> config [label="Fetch Configuration"];
+
+    user_service_1 -> config [label="Fetch Configuration"];
+    user_service_2 -> config [label="Fetch Configuration"];
+}
